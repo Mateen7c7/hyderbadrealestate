@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import PropertyCard from "../components/PopertyCard";
+import Navbar from "../components/Navbar";
 import { properties, categories } from "../lib/data";
 
 const categoryButtonData = [
@@ -33,8 +34,10 @@ const PropertiesPage = () => {
   }, [activeCategory]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <main className="min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-8">
         <div className="text-center space-y-2">
           <p className="text-sm font-semibold text-blue-600 uppercase tracking-wide">
             Explore Listings
@@ -90,8 +93,9 @@ const PropertiesPage = () => {
             />
           ))}
         </div>
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 

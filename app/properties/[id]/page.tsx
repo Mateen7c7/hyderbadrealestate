@@ -1,5 +1,6 @@
 import { properties } from "../../lib/data";
 import ImageCarousel from "@/app/components/ImageCarousel";
+import Navbar from "@/app/components/Navbar";
 
 interface PropertyPageProps {
   params: Promise<{
@@ -14,17 +15,20 @@ const Page = async ({ params }: PropertyPageProps) => {
 
   if (!property) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-        <div className="max-w-md text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Property not found
-          </h1>
-          <p className="text-gray-600">
-            The property you are looking for does not exist or may have been
-            removed.
-          </p>
+      <main className="min-h-screen bg-gray-50">
+        <Navbar />
+        <div className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4">
+          <div className="max-w-md text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              Property not found
+            </h1>
+            <p className="text-gray-600">
+              The property you are looking for does not exist or may have been
+              removed.
+            </p>
+          </div>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -35,8 +39,10 @@ const Page = async ({ params }: PropertyPageProps) => {
   }).format(property.price);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+    <main className="min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
         {/* Top section: images + key info */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:items-start">
           {/* Image gallery */}
@@ -141,8 +147,9 @@ const Page = async ({ params }: PropertyPageProps) => {
             </div>
           </div>
         </div>
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 
