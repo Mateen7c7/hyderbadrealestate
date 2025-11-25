@@ -15,23 +15,33 @@ const categoryButtonData = [
 
 const PropertiesPage = () => {
   const [activeCategory, setActiveCategory] = useState("all");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   const filteredProperties = useMemo(() => {
-    if (activeCategory === "all") {
-      return properties;
+    let filtered = properties;
+
+    if (activeCategory !== "all") {
+      const selectedCategory = categories.find(
+        (category) => category.title === activeCategory
+      );
+
+      if (selectedCategory) {
+        const selectedIds = new Set(selectedCategory.id);
+        filtered = filtered.filter((property) => selectedIds.has(property.id));
+      }
     }
 
-    const selectedCategory = categories.find(
-      (category) => category.title === activeCategory
-    );
-
-    if (!selectedCategory) {
-      return properties;
+    if (minPrice !== "") {
+      filtered = filtered.filter((property) => property.price >= Number(minPrice));
     }
 
-    const selectedIds = new Set(selectedCategory.id);
-    return properties.filter((property) => selectedIds.has(property.id));
-  }, [activeCategory]);
+    if (maxPrice !== "") {
+      filtered = filtered.filter((property) => property.price <= Number(maxPrice));
+    }
+
+    return filtered;
+  }, [activeCategory, minPrice, maxPrice]);
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -71,6 +81,49 @@ const PropertiesPage = () => {
           })}
         </div>
 
+        {/* Price Filter Section */}
+        <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 max-w-2xl mx-auto">
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <div className="w-full sm:w-auto flex-1">
+              <label htmlFor="min-price" className="block text-sm font-medium text-gray-700 mb-1">
+                Min Price
+              </label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                  $
+                </span>
+                <input
+                  type="number"
+                  id="min-price"
+                  placeholder="0"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)}
+                  className="block w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-shadow"
+                />
+              </div>
+            </div>
+            <div className="hidden sm:block text-gray-400 font-medium">-</div>
+            <div className="w-full sm:w-auto flex-1">
+              <label htmlFor="max-price" className="block text-sm font-medium text-gray-700 mb-1">
+                Max Price
+              </label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                  $
+                </span>
+                <input
+                  type="number"
+                  id="max-price"
+                  placeholder="Any"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                  className="block w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-shadow"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-center sm:text-left">
           <p className="text-lg font-semibold text-gray-900">
             {activeCategory === "all" ? "All Properties" : activeCategory}
@@ -82,16 +135,32 @@ const PropertiesPage = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredProperties.map((property) => (
-            <PropertyCard
-              key={property.id}
-              id={property.id}
-              title={property.title}
-              images={property.images}
-              price={property.price}
-              size={property.size}
-            />
-          ))}
+          {filteredProperties.length > 0 ? (
+            filteredProperties.map((property) => (
+              <PropertyCard
+                key={property.id}
+                id={property.id}
+                title={property.title}
+                images={property.images}
+                price={property.price}
+                size={property.size}
+              />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-500 text-lg">No properties found matching your criteria.</p>
+              <button 
+                onClick={() => {
+                  setActiveCategory("all");
+                  setMinPrice("");
+                  setMaxPrice("");
+                }}
+                className="mt-4 text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Clear all filters
+              </button>
+            </div>
+          )}
         </div>
         </div>
       </div>
