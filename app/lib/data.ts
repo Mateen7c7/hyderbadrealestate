@@ -207,18 +207,94 @@ export const categories = [
   },
   {
     title: "Rental Income Properties",
-    id: [7,9,20,18],
+    id: [7, 9, 20, 18],
   },
   {
     title: "Development Lands",
-    id: [7,12,1,15,4],
+    id: [7, 12, 1, 15, 4],
   },
   {
     title: "Agriculture Lands",
-    id: [8,19,13,6],
+    id: [8, 19, 13, 6],
   },
   {
     title: "Bank Seized Properties",
-    id: [11,14,16,17],
+    id: [11, 14, 16, 17],
   },
+];
+
+export const newCategories = [
+  {
+    name: "Commercial Properties",
+    subCategories: [
+      {
+        name: "Commercial Buildings",
+        ids: [3, 7, 9, 5],
+      },
+      {
+        name:"Commercial Lands",
+        ids:[1,15,4]
+      }
+    ],
+  },
+  {
+    name:"Rental Income Properties",
+    subCategories:[
+      {
+        name:"Hotels",
+        ids:[7,9,20,18]
+      },
+      {
+        name:" Hospitals & Medical Facilities",
+        ids:[11,14,16,17]
+      },
+      {
+        name:"Other Rental Assets",
+        ids:[1,15,4]
+      }
+    ]
+  },
+  {
+    name:"Development Lands",
+    subCategories:[
+      {
+        name:" Apartment Development Lands",
+        ids:[7,12,1,15,4]
+      },
+      {
+        name:"Villa Development Lands",
+        ids:[8,19,13,6]
+      },
+      {
+        name:" Plotting Development Lands",
+        ids:[7,12,1,15,4]
+      }
+    ]
+  },
+  {
+    name:"Agriculture Lands",
+    subCategories:[
+      {
+        name:"Agriculture Lands",
+        ids:[8,19,13,6]
+      },
+      {
+        name:"Plantation Lands",
+        ids:[4,12,1,15,4]
+      }
+    ]
+  },
+  {
+    name:"Bank Seized Properties",
+    subCategories:[
+      {
+        name:"Residential",
+        ids:[11,14,16,17]
+      },
+      {
+        name:"Commercial",
+        ids:[11,14,16,17]
+      }
+    ]
+  }
 ];
